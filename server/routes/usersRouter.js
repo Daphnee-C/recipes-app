@@ -1,23 +1,15 @@
 import {Router} from 'express'
-import User from '../models/users.js'
+import { getAllUsers, createUser, getUserByID, updateUser} from '../controllers/userController.js'
+import { VerifyUserFields } from '../middlewares/verifyUserFields.js'
 
 const usersRouter = Router()
 
-usersRouter.get('/users', async (req, res) => {
-    try{
-        const users = await User.find()
-        if(users.length < 1){
-            return res.status(400).json({message: 'User not found'})   
-        }
-        return res.status(200).json(users)
-        
-    }
+usersRouter.get('/users', getAllUsers)
+usersRouter.get('/users/:id', getUserByID)
 
-    catch(err) {
-        return res.status(500).json({message: 'Internal server error'})
-    }
+usersRouter.post('/users',VerifyUserFields, createUser)
 
+usersRouter.put('/users/:id', updateUser)
 
-})
 
 export default usersRouter
