@@ -2,7 +2,7 @@ import User from "../models/users.js";
 
 export const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await User.find()
         if (users.length < 1) {
         return res.status(400).json({ message: "User not found" });
     }
